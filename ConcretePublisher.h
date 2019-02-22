@@ -7,17 +7,17 @@ private:
 	char *article;
 	int clc;					//счётчик для файла
 	char *path;					//путь для файла
-	ISubscriber *address;
+	MyVector<class ISubscriber *> address;
 	static int count;			// для подсчёта количества созданных объектов класса 
 	static int cntr_for_artcl;	// для цикла, где уведомления подписчикам 
 public:
-	ConcretePublisher(char*);
+	ConcretePublisher(char *);
 	void get_latest_info();
-	void subscribe(ISubscriber&) override;
-	void unsubscribe() override;
+	void subscribe(ISubscriber &) override;
+	void unsubscribe(ISubscriber &) override;
 	void notify() override;
-	bool plus_or_minus();
-	static void some_logic(ConcretePublisher*);
+	bool plus_or_minus(ISubscriber &);
+	static void some_logic(ConcretePublisher *);
 	~ConcretePublisher();
 };
 #include "ConcretePublisher.cpp"
