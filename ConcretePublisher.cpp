@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <conio.h>
-#include "my_fun.cpp"
 #include "ISubscriber.h"
 #include "ConcreteSubscriber.h"
 using namespace std;
@@ -10,7 +9,6 @@ using namespace std;
 ConcretePublisher::ConcretePublisher(char *a)
 {
 	count++;
-	address = nullptr;
 	clc = 0;
 
 	name = new char[25];
@@ -60,25 +58,25 @@ void ConcretePublisher::get_latest_info()
 
 void ConcretePublisher::subscribe(ISubscriber &subscriber)
 {
-	this->address = &subscriber;
+	this->address.Push_Back(&subscriber);
 }
 
-void ConcretePublisher::unsubscribe()
+void ConcretePublisher::unsubscribe(ISubscriber &subscriber)
 {
-	this->address = nullptr;
+	this->address.Remove(&subscriber);
 }
 
 void ConcretePublisher::notify()
 {
-	if (address != nullptr)
+	for (int i=0; i<address.ret_size(); i++)
 	{
-		address->update(name, article);
+		address[i]->update(name, article);
 	}
 }
 
-bool ConcretePublisher::plus_or_minus()
+bool ConcretePublisher::plus_or_minus(ISubscriber &subscriber)
 {
-	return address != nullptr ? true : false;
+	return address.is_there(&subscriber);
 }
 
 void ConcretePublisher::some_logic(ConcretePublisher *a)
